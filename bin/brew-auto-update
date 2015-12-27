@@ -5,6 +5,12 @@ set -o pipefail
 
 PATH=/usr/local/bin:$PATH
 
+# Redirect Stdout and Stderr to prepend Timestamps
+exec 3> >(while read line; do echo "[$(date '+%Y-%m-%d %T')] INFO - $line"; done)
+exec 4> >(while read line; do echo "[$(date '+%Y-%m-%d %T')] ERRO - $line"; done)
+exec 1>&3
+exec 2>&4
+
 # Check OS X system settings.  Note that the Homebrew terminology is
 # different from OS X:
 #
@@ -23,6 +29,7 @@ if [ "$(scutil -r github.com)" != 'Reachable' ]; then
     exit
 fi
 
+# Use the icon from one of the terminal applications and which terminal to open upon click
 for termapp in iTerm Terminal; do
     if termapp_id=$(osascript -e "id of app \"$termapp\"" 2>/dev/null) && [ -n "$termapp_id" ]; then
         break
