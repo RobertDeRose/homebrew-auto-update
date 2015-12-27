@@ -3,6 +3,7 @@ require 'formula'
 class BrewAutoUpdate < Formula
   homepage 'https://github.com/petere/homebrew-auto-update/'
   head 'https://github.com/petere/homebrew-auto-update.git', :branch => 'master'
+  devel 'https://github.com/RobertDeRose/homebrew-auto-update.git', :branch => 'use-upgrade-flag-and-remove-blank-notifications'
 
   depends_on 'terminal-notifier'
 
